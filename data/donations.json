@@ -1,0 +1,16 @@
+[
+    {
+        "donationId": 1,
+        "accountId": 1,
+        "amount": 50,
+        "donationDate": "2026-08-23",
+        "cause": "Youth Technology Support"
+    },
+    {
+        "donationId": 2,
+        "accountId": 2,
+        "amount": 100,
+        "donationDate": "2026-08-22",
+        "cause": "Technology for Students"
+    }
+]

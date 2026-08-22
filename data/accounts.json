@@ -1,0 +1,18 @@
+[
+    {
+        "accountId": 1,
+        "firstName": "Admin",
+        "lastName": "User",
+        "email": "admin@pixelpals.co.nz",
+        "password": "admin123",
+        "role": "admin"
+    },
+    {
+        "accountId": 2,
+        "firstName": "Luke",
+        "lastName": "Test",
+        "email": "luke@test.com",
+        "password": "password123",
+        "role": "user"
+    }
+]

@@ -1,0 +1,20 @@
+[
+    {
+        "eventId": 1,
+        "eventName": "Pixel Pals Valorant Championship",
+        "eventDate": "2026-09-25",
+        "eventTime": "12:00",
+        "location": "Nelson",
+        "game": "Valorant",
+        "maxTeams": 12
+    },
+    {
+        "eventId": 2,
+        "eventName": "Pixel Pals Rocket League Tournament",
+        "eventDate": "2026-10-10",
+        "eventTime": "12:00",
+        "location": "Richmond",
+        "game": "Rocket League",
+        "maxTeams": 6
+    }
+]

@@ -1,0 +1,12 @@
+[
+    {
+        "participantId": 1,
+        "registrationId": 1,
+        "participantName": "Alex Smith"
+    },
+    {
+        "participantId": 2,
+        "registrationId": 1,
+        "participantName": "Sam Jones"
+    }
+]

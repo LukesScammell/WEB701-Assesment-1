@@ -1,0 +1,16 @@
+{
+  "name": "web701-assesment-1",
+  "version": "1.0.0",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^5.2.1"
+  },
+  "description": "This will be fore the assesment 1 for the development and the use of the project planner",
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
