@@ -1,12 +1,25 @@
 using PixelPalsBlazor.Components;
+using Microsoft.EntityFrameworkCore;
+using PixelPalsBlazor.Data;
 
 var builder = WebApplication.CreateBuilder(args);
+
+// Connect Entity Framework Core to the Pixel Pals SQLite database.
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 var app = builder.Build();
+
+// Create the SQLite database and its tables if they do not already exist.
+using (var scope = app.Services.CreateScope())
+{
+    var database = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+    database.Database.EnsureCreated();
+}
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
