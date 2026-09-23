@@ -1,0 +1,81 @@
+@page "/transaction"
+@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore
+@using PixelPalsBlazor.Data
+@using PixelPalsBlazor.Models
+@using PixelPalsBlazor.Services
+@inject AppDbContext Database
+@inject JwtService JwtService
+@inject UserSession UserSession
+
+<PageTitle>Token Transaction</PageTitle>
+
+<h1>Token Transaction</h1>
+
+<p>Enter the number of tokens to use.</p>
+
+<div>
+    <label>Token Amount</label>
+    <input type="number" @bind="amount" />
+</div>
+
+<button @onclick="MakeTransaction">Submit Transaction</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <p>@message</p>
+}
+
+@code {
+    private int amount;
+    private string message = "";
+
+    private async Task MakeTransaction()
+    {
+        // A user must be authenticated before making a transaction.
+        if (string.IsNullOrEmpty(UserSession.JwtToken))
+        {
+            message = "Please login first.";
+            return;
+        }
+
+        // Only allow a positive number of tokens.
+        if (amount <= 0)
+        {
+            message = "Token amount must be greater than zero.";
+            return;
+        }
+
+        // Validate the JWT and retrieve the authenticated user's ID.
+        var userId = JwtService.GetUserIdFromToken(UserSession.JwtToken);
+
+        if (userId == null)
+        {
+            message = "Invalid or expired login.";
+            return;
+        }
+
+        var user = await Database.Users
+            .FirstOrDefaultAsync(user => user.Id == userId);
+
+        if (user == null)
+        {
+            message = "Account not found.";
+            return;
+        }
+
+        // Prevent a transaction if the user does not have enough tokens.
+        if (amount > user.Tokens)
+        {
+            message = "Not enough tokens.";
+            return;
+        }
+
+        // Update the user's token balance and save it to SQLite.
+        user.Tokens -= amount;
+        await Database.SaveChangesAsync();
+
+        message = $"Transaction successful. Remaining tokens: {user.Tokens}.";
+        amount = 0;
+    }
+}
