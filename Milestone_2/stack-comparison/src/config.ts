@@ -1,4 +1,4 @@
-import { Criterion, StackCandidate } from "./types";
+import { Criterion, StackCandidate, ScoreMatrix } from "./types";
 
 // Criteria used to compare each framework for the Pixel Pals website.
 // The weights total 1.00.
@@ -54,3 +54,23 @@ export const stacks: StackCandidate[] = [
         name: "WordPress Full Stack"
     }
 ];
+
+// Scores are added after each framework prototype has been implemented
+// and tested. Each criterion uses a score from 1 to 10.
+export const scores: ScoreMatrix = {
+    fastapi: {
+        development: 7,
+        requirements: 9,
+        security: 9,
+        database: 9,
+        frontend: 9
+    },
+
+    gradio: {
+        development: 9,
+        requirements: 7,
+        security: 8,
+        database: 8,
+        frontend: 5
+    }
+};
