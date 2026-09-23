@@ -1,7 +1,7 @@
 import gradio as gr
 from database import engine, Base, SessionLocal
 from models import User
-from auth import hash_password
+from auth import hash_password, verify_password, create_access_token
 import models
 
 
@@ -42,7 +42,32 @@ def register_user(name, email, password):
 
     finally:
         db.close()
+        
+# Logs a user in and creates a JWT when the credentials are correct.
+def login_user(email, password):
+    if not email or not password:
+        return "Please enter your email and password.", ""
 
+    db = SessionLocal()
+
+    try:
+        # Retrieves the user account using the entered email address.
+        user = db.query(User).filter(User.email == email).first()
+
+        if not user:
+            return "Invalid email or password.", ""
+
+        # Checks the entered password against the stored password hash.
+        if not verify_password(password, user.password):
+            return "Invalid email or password.", ""
+
+        # Creates a JWT containing the authenticated user's ID.
+        token = create_access_token(user.id)
+
+        return "Login successful.", token
+
+    finally:
+        db.close()
 
 # Creates the Gradio interface for the Pixel Pals prototype.
 with gr.Blocks(title="Pixel Pals") as app:
@@ -65,7 +90,20 @@ with gr.Blocks(title="Pixel Pals") as app:
     )
 
     gr.Markdown("## Login")
-    gr.Markdown("Login functionality will be added next.")
+
+    login_email = gr.Textbox(label="Email")
+    login_password = gr.Textbox(label="Password", type="password")
+    login_button = gr.Button("Login")
+    login_output = gr.Textbox(label="Login Result")
+
+    # Stores the JWT in the Gradio application state after login.
+    jwt_state = gr.State("")
+
+    login_button.click(
+        fn=login_user,
+        inputs=[login_email, login_password],
+        outputs=[login_output, jwt_state]
+    )
 
     gr.Markdown("## Token Transaction")
     gr.Markdown("Token transaction functionality will be added later.")
