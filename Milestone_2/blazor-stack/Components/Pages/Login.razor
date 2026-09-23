@@ -1,0 +1,75 @@
+@page "/login"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using PixelPalsBlazor.Data
+@using PixelPalsBlazor.Models
+@using PixelPalsBlazor.Services
+@inject AppDbContext Database
+@inject PasswordHasher<User> PasswordHasher
+@inject JwtService JwtService
+
+<PageTitle>Login</PageTitle>
+
+<h1>Pixel Pals Login</h1>
+
+<p>Login to your Pixel Pals account.</p>
+
+<div>
+    <label>Email</label>
+    <input @bind="email" />
+</div>
+
+<div>
+    <label>Password</label>
+    <input type="password" @bind="password" />
+</div>
+
+<button @onclick="LoginUser">Login</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <p>@message</p>
+}
+
+@code {
+    private string email = "";
+    private string password = "";
+    private string message = "";
+
+    // The JWT is kept in the component after a successful login.
+    // It will later be used to retrieve the authenticated account.
+    private string jwtToken = "";
+
+    private async Task LoginUser()
+    {
+        // Find the account using the supplied email address.
+        var user = await Database.Users
+            .FirstOrDefaultAsync(user => user.Email == email);
+
+        if (user == null)
+        {
+            message = "Invalid email or password.";
+            return;
+        }
+
+        // Compare the supplied password with the hashed password
+        // stored in the database.
+        var result = PasswordHasher.VerifyHashedPassword(
+            user,
+            user.Password,
+            password);
+
+        if (result == PasswordVerificationResult.Failed)
+        {
+            message = "Invalid email or password.";
+            return;
+        }
+
+        // Generate a JWT that identifies the authenticated user.
+        jwtToken = JwtService.CreateToken(user);
+
+        message = "Login successful.";
+        password = "";
+    }
+}

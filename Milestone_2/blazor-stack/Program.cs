@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using PixelPalsBlazor.Data;
 using Microsoft.AspNetCore.Identity;
 using PixelPalsBlazor.Models;
+using PixelPalsBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,6 +17,9 @@ builder.Services.AddScoped<PasswordHasher<User>>();
 // Add services to the container.
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
+
+// Provides JWT creation and validation for authentication.
+builder.Services.AddScoped<JwtService>();
 
 var app = builder.Build();
 
