@@ -1,7 +1,7 @@
 import gradio as gr
 from database import engine, Base, SessionLocal
 from models import User
-from auth import hash_password, verify_password, create_access_token
+from auth import hash_password, verify_password, create_access_token, decode_access_token
 import models
 
 
@@ -69,6 +69,31 @@ def login_user(email, password):
     finally:
         db.close()
 
+# Retrieves the authenticated user's account information.
+def get_account(token):
+    if not token:
+        return "You must log in first."
+
+    # Gets the user ID stored inside the JWT.
+    user_id = decode_access_token(token)
+
+    if not user_id:
+        return "Invalid or expired login."
+
+    db = SessionLocal()
+
+    try:
+        # Retrieves the authenticated user's data from the database.
+        user = db.query(User).filter(User.id == user_id).first()
+
+        if not user:
+            return "User account could not be found."
+
+        return f"Name: {user.name}\nEmail: {user.email}\nTokens: {user.tokens}"
+
+    finally:
+        db.close()
+
 # Creates the Gradio interface for the Pixel Pals prototype.
 with gr.Blocks(title="Pixel Pals") as app:
     gr.Markdown("# Pixel Pals")
@@ -105,6 +130,19 @@ with gr.Blocks(title="Pixel Pals") as app:
         outputs=[login_output, jwt_state]
     )
 
+    gr.Markdown("## My Account")
+
+    account_button = gr.Button("Load Account")
+    account_output = gr.Textbox(label="Account Information", lines=3)
+
+    # Uses the JWT from the current Gradio session to retrieve the user's account.
+    account_button.click(
+        fn=get_account,
+        inputs=jwt_state,
+        outputs=account_output
+    )
+
+    
     gr.Markdown("## Token Transaction")
     gr.Markdown("Token transaction functionality will be added later.")
 

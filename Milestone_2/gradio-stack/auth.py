@@ -32,3 +32,13 @@ def create_access_token(user_id: int):
     }
 
     return jwt.encode(token_data, SECRET_KEY, algorithm=ALGORITHM)
+
+# Decodes a JWT and returns the authenticated user's ID.
+def decode_access_token(token: str):
+    try:
+        token_data = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return token_data["user_id"]
+    except jwt.ExpiredSignatureError:
+        return None
+    except jwt.InvalidTokenError:
+        return None
