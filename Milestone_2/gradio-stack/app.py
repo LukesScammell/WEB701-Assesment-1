@@ -1,4 +1,10 @@
 import gradio as gr
+from database import engine, Base
+import models
+
+
+# Creates the database tables when the application starts.
+Base.metadata.create_all(bind=engine)
 
 
 # Creates the basic Gradio interface for the Pixel Pals prototype.
