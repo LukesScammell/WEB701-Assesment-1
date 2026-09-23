@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pixel Pals - FastAPI Prototype</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+
+    <header>
+        <h1>Pixel Pals</h1>
+        <p>Python / FastAPI Stack Prototype</p>
+    </header>
+
+    <main>
+
+        <!-- Requirement 1: User registration -->
+        <section>
+            <h2>Register Account</h2>
+
+            <form id="register-form">
+                <label for="register-name">Name</label>
+                <input type="text" id="register-name" required>
+
+                <label for="register-email">Email</label>
+                <input type="email" id="register-email" required>
+
+                <label for="register-password">Password</label>
+                <input type="password" id="register-password" required>
+
+                <button type="submit">Register</button>
+            </form>
+
+            <p id="register-message"></p>
+        </section>
+
+
+        <!-- Requirement 1: User login -->
+        <section>
+            <h2>Login</h2>
+
+            <form id="login-form">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" required>
+
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" required>
+
+                <button type="submit">Login</button>
+            </form>
+
+            <p id="login-message"></p>
+        </section>
+
+
+        <!-- Requirements 1 and 3: Retrieve account information -->
+        <section>
+            <h2>My Account</h2>
+
+            <button id="account-button">Load Account</button>
+
+            <div id="account-details">
+                <p>Name: <span id="account-name">Not loaded</span></p>
+                <p>Email: <span id="account-email">Not loaded</span></p>
+                <p>Tokens: <span id="account-tokens">Not loaded</span></p>
+            </div>
+        </section>
+
+
+        <!-- Requirement 2: Token transaction -->
+        <section>
+            <h2>Token Transaction</h2>
+
+            <form id="transaction-form">
+                <label for="transaction-amount">Tokens to use</label>
+                <input type="number" id="transaction-amount" min="1" required>
+
+                <button type="submit">Complete Transaction</button>
+            </form>
+
+            <p id="transaction-message"></p>
+        </section>
+
+    </main>
+
+    <script src="/static/script.js"></script>
+
+</body>
+</html>
