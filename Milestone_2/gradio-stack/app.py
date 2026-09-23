@@ -94,6 +94,52 @@ def get_account(token):
     finally:
         db.close()
 
+# Processes a token transaction for the authenticated user.
+def make_transaction(token, amount):
+    if not token:
+        return "You must log in first."
+
+    # Gets the authenticated user's ID from the JWT.
+    user_id = decode_access_token(token)
+
+    if not user_id:
+        return "Invalid or expired login."
+
+    # Checks that an amount has been entered.
+    if amount is None:
+        return "Please enter a token amount."
+
+    try:
+        amount = int(amount)
+    except (ValueError, TypeError):
+        return "Token amount must be a whole number."
+
+    # Prevents zero or negative token transactions.
+    if amount <= 0:
+        return "Token amount must be greater than zero."
+
+    db = SessionLocal()
+
+    try:
+        # Retrieves the authenticated user from the database.
+        user = db.query(User).filter(User.id == user_id).first()
+
+        if not user:
+            return "User account could not be found."
+
+        # Prevents the user from spending more tokens than they have.
+        if user.tokens < amount:
+            return "Not enough tokens."
+
+        # Deducts the transaction amount and saves the new balance.
+        user.tokens -= amount
+        db.commit()
+
+        return f"Transaction successful. New token balance: {user.tokens}"
+
+    finally:
+        db.close()
+
 # Creates the Gradio interface for the Pixel Pals prototype.
 with gr.Blocks(title="Pixel Pals") as app:
     gr.Markdown("# Pixel Pals")
@@ -142,9 +188,23 @@ with gr.Blocks(title="Pixel Pals") as app:
         outputs=account_output
     )
 
-    
+
     gr.Markdown("## Token Transaction")
-    gr.Markdown("Token transaction functionality will be added later.")
+
+    transaction_amount = gr.Number(
+        label="Token Amount",
+        precision=0
+    )
+
+    transaction_button = gr.Button("Complete Transaction")
+    transaction_output = gr.Textbox(label="Transaction Result")
+
+    # Uses the logged-in user's JWT to process the token transaction.
+    transaction_button.click(
+        fn=make_transaction,
+        inputs=[jwt_state, transaction_amount],
+        outputs=transaction_output
+    )
 
 
 # Starts the Gradio application.
