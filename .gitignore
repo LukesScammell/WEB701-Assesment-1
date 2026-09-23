@@ -152,3 +152,19 @@ __pycache__/
 
 # Python environment files
 .pytest_cache/
+
+# .NET build files
+bin/
+obj/
+
+# Visual Studio
+.vs/
+
+# User-specific files
+*.user
+*.suo
+
+# Local database files
+*.db
+*.db-shm
+*.db-wal
