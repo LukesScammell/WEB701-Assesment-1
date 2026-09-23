@@ -21,6 +21,9 @@ builder.Services.AddRazorComponents()
 // Provides JWT creation and validation for authentication.
 builder.Services.AddScoped<JwtService>();
 
+// Stores authentication state for the current Blazor session.
+builder.Services.AddScoped<UserSession>();
+
 var app = builder.Build();
 
 // Create the SQLite database and its tables if they do not already exist.

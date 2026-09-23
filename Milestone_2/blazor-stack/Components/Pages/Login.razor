@@ -9,6 +9,8 @@
 @inject PasswordHasher<User> PasswordHasher
 @inject JwtService JwtService
 
+@inject UserSession UserSession
+
 <PageTitle>Login</PageTitle>
 
 <h1>Pixel Pals Login</h1>
@@ -39,7 +41,6 @@
 
     // The JWT is kept in the component after a successful login.
     // It will later be used to retrieve the authenticated account.
-    private string jwtToken = "";
 
     private async Task LoginUser()
     {
@@ -66,8 +67,9 @@
             return;
         }
 
-        // Generate a JWT that identifies the authenticated user.
-        jwtToken = JwtService.CreateToken(user);
+        // Store the JWT in the current Blazor session so authenticated
+        // features can use it to identify the logged-in user.
+        UserSession.JwtToken = JwtService.CreateToken(user);
 
         message = "Login successful.";
         password = "";

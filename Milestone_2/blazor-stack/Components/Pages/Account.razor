@@ -1,0 +1,65 @@
+@page "/account"
+@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore
+@using PixelPalsBlazor.Data
+@using PixelPalsBlazor.Models
+@using PixelPalsBlazor.Services
+@inject AppDbContext Database
+@inject JwtService JwtService
+@inject UserSession UserSession
+
+<PageTitle>My Account</PageTitle>
+
+<h1>My Account</h1>
+
+<button @onclick="GetAccount">Get Account</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <p>@message</p>
+}
+
+@if (user != null)
+{
+    <p>Name: @user.Name</p>
+    <p>Email: @user.Email</p>
+    <p>Tokens: @user.Tokens</p>
+}
+
+@code {
+    private User? user;
+    private string message = "";
+
+    private async Task GetAccount()
+    {
+        user = null;
+
+        // Require a JWT before account information can be retrieved.
+        if (string.IsNullOrEmpty(UserSession.JwtToken))
+        {
+            message = "Please login first.";
+            return;
+        }
+
+        // Validate the JWT and retrieve the authenticated user's ID.
+        var userId = JwtService.GetUserIdFromToken(UserSession.JwtToken);
+
+        if (userId == null)
+        {
+            message = "Invalid or expired login.";
+            return;
+        }
+
+        // Retrieve only the account identified by the validated JWT.
+        user = await Database.Users
+            .FirstOrDefaultAsync(user => user.Id == userId);
+
+        if (user == null)
+        {
+            message = "Account not found.";
+            return;
+        }
+
+        message = "Account retrieved successfully.";
+    }
+}
