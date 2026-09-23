@@ -1,0 +1,30 @@
+[
+  {
+    "stack": {
+      "id": "fastapi",
+      "name": "Python / FastAPI"
+    },
+    "total": 8.5,
+    "breakdown": {
+      "development": 1.75,
+      "requirements": 2.25,
+      "security": 1.8,
+      "database": 1.3499999999999999,
+      "frontend": 1.3499999999999999
+    }
+  },
+  {
+    "stack": {
+      "id": "gradio",
+      "name": "Gradio App Stack"
+    },
+    "total": 7.55,
+    "breakdown": {
+      "development": 2.25,
+      "requirements": 1.75,
+      "security": 1.6,
+      "database": 1.2,
+      "frontend": 0.75
+    }
+  }
+]
