@@ -1,12 +1,17 @@
 using PixelPalsBlazor.Components;
 using Microsoft.EntityFrameworkCore;
 using PixelPalsBlazor.Data;
+using Microsoft.AspNetCore.Identity;
+using PixelPalsBlazor.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Connect Entity Framework Core to the Pixel Pals SQLite database.
 builder.Services.AddDbContext<AppDbContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Provides secure password hashing for registered users.
+builder.Services.AddScoped<PasswordHasher<User>>();
 
 // Add services to the container.
 builder.Services.AddRazorComponents()

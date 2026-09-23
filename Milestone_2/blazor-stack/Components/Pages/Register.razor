@@ -1,0 +1,85 @@
+@page "/register"
+@rendermode InteractiveServer
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.EntityFrameworkCore
+@using PixelPalsBlazor.Data
+@using PixelPalsBlazor.Models
+@inject AppDbContext Database
+@inject PasswordHasher<User> PasswordHasher
+
+<PageTitle>Register</PageTitle>
+
+<h1>Pixel Pals Registration</h1>
+
+<p>Create a Pixel Pals account.</p>
+
+<div>
+    <label>Name</label>
+    <input @bind="name" />
+</div>
+
+<div>
+    <label>Email</label>
+    <input @bind="email" />
+</div>
+
+<div>
+    <label>Password</label>
+    <input type="password" @bind="password" />
+</div>
+
+<button @onclick="RegisterUser">Register</button>
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <p>@message</p>
+}
+
+@code {
+    private string name = "";
+    private string email = "";
+    private string password = "";
+    private string message = "";
+
+    private async Task RegisterUser()
+    {
+        // Check that all registration fields have been completed.
+        if (string.IsNullOrWhiteSpace(name) ||
+            string.IsNullOrWhiteSpace(email) ||
+            string.IsNullOrWhiteSpace(password))
+        {
+            message = "Please complete all fields.";
+            return;
+        }
+
+        // Prevent multiple accounts from using the same email address.
+        var existingUser = await Database.Users
+            .FirstOrDefaultAsync(user => user.Email == email);
+
+        if (existingUser != null)
+        {
+            message = "Email is already registered.";
+            return;
+        }
+
+        // Create the new user with the default Pixel Pals token balance.
+        var user = new User
+        {
+            Name = name,
+            Email = email,
+            Tokens = 100
+        };
+
+        // Hash the password before storing it in the database.
+        user.Password = PasswordHasher.HashPassword(user, password);
+
+        Database.Users.Add(user);
+        await Database.SaveChangesAsync();
+
+        message = "Registration successful.";
+
+        name = "";
+        email = "";
+        password = "";
+    }
+}
