@@ -168,3 +168,22 @@ obj/
 *.db
 *.db-shm
 *.db-wal
+
+# WordPress local installation
+Milestone_2/wordpress-stack/*
+
+# Keep wp-content available for custom project code
+!Milestone_2/wordpress-stack/wp-content/
+Milestone_2/wordpress-stack/wp-content/*
+
+# Keep custom plugins
+!Milestone_2/wordpress-stack/wp-content/plugins/
+Milestone_2/wordpress-stack/wp-content/plugins/*
+
+# Keep the Pixel Pals plugin
+!Milestone_2/wordpress-stack/wp-content/plugins/pixel-pals/
+!Milestone_2/wordpress-stack/wp-content/plugins/pixel-pals/**
+
+# Never commit local WordPress configuration or uploads
+Milestone_2/wordpress-stack/wp-config.php
+Milestone_2/wordpress-stack/wp-content/uploads/
