@@ -187,3 +187,41 @@ Milestone_2/wordpress-stack/wp-content/plugins/*
 # Never commit local WordPress configuration or uploads
 Milestone_2/wordpress-stack/wp-config.php
 Milestone_2/wordpress-stack/wp-content/uploads/
+
+# Composer dependencies
+Milestone_3/vendor/
+
+# Node.js dependencies
+Milestone_3/node_modules/
+
+# Laravel environment configuration
+Milestone_3/.env
+Milestone_3/.env.*
+!Milestone_3/.env.example
+
+# SQLite database and temporary files
+Milestone_3/database/*.sqlite
+Milestone_3/database/*.sqlite-shm
+Milestone_3/database/*.sqlite-wal
+
+# Laravel application logs
+Milestone_3/storage/logs/*
+
+# Laravel generated cache files
+Milestone_3/bootstrap/cache/*.php
+
+# Laravel framework-generated storage files
+Milestone_3/storage/framework/cache/data/*
+Milestone_3/storage/framework/sessions/*
+Milestone_3/storage/framework/views/*
+
+# Compiled frontend assets
+Milestone_3/public/build/
+
+# PHPUnit test cache
+Milestone_3/.phpunit.cache/
+Milestone_3/.phpunit.result.cache
+
+# Local development configuration
+Milestone_3/.phpunit-watcher.yml
+Milestone_3/auth.json
