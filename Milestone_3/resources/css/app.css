@@ -9,7 +9,9 @@
    Pixel Pals - Colours and Global Styles
 ======================================== */
 
+
 :root {
+    /* Main Website Colours */
     --primary-blue: #3478d4;
     --light-blue: #dcecff;
     --pale-blue: #eef6ff;
@@ -18,7 +20,22 @@
     --border-grey: #b9c8dc;
     --text-colour: #25364b;
     --white: #ffffff;
+
+    /* Events Page Colours */
+    --event-card-bg: #dedede;
+    --event-card-border: #b8b8b8;
+    --event-heading: #26364b;
+
+    /* Event Button Colours */
+    --event-button-bg: #bfc4cc;
+    --event-button-text: #49515c;
+    --event-button-border: #a4aab3;
+
+    /* Shadow Colours */
+    --shadow-light: rgba(0, 0, 0, 0.08);
+    --shadow-medium: rgba(0, 0, 0, 0.12);
 }
+
 
 * {
     box-sizing: border-box;
@@ -312,3 +329,143 @@ body {
         min-height: 180px;
     }
 }
+
+/* ========================================
+   Pixel Pals - Events Page
+======================================== */
+
+.events-page {
+    max-width: 1200px;
+    margin: 35px auto;
+    padding: 0 20px;
+}
+
+/* Events heading */
+
+.events-section h1 {
+    color: var(--dark-blue);
+    font-size: 32px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+/* Three-column events grid */
+
+.events-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 18px;
+}
+
+/* Individual event cards */
+
+.event-card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    padding: 20px;
+    background: var(--event-card-bg);
+
+    border: 1px solid var(--event-card-border);
+    border-radius: 12px;
+
+    transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 14px var(--shadow-medium);
+}
+
+/* Event title */
+
+.event-card h2 {
+    margin: 0 0 10px;
+    color: var(--event-heading);
+    font-size: 20px;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+}
+
+/* Event details */
+
+.event-card p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.event-card strong {
+    color: var(--event-heading);
+}
+
+/* Event action area */
+
+.event-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    margin-top: auto;
+    padding-top: 15px;
+}
+
+.event-action-placeholder {
+    display: inline-block;
+    padding: 8px 16px;
+
+    background: var(--event-button-bg);
+    color: var(--event-button-text);
+
+    border: 1px solid var(--event-button-border);
+    border-radius: 7px;
+
+    font-size: 13px;
+    font-weight: bold;
+    cursor: default;
+}
+
+/* Empty events message */
+
+.events-grid > .placeholder-text {
+    grid-column: 1 / -1;
+    padding: 30px;
+
+    background: var(--pale-blue);
+    border: 1px solid var(--border-grey);
+    border-radius: 12px;
+}
+
+/* ========================================
+   Events Page - Responsive Design
+======================================== */
+
+@media (max-width: 900px) {
+    .events-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .events-page {
+        margin: 20px auto;
+        padding: 0 12px;
+    }
+
+    .events-section h1 {
+        font-size: 26px;
+    }
+
+    .events-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .event-card {
+        padding: 18px;
+    }
+}
+
+

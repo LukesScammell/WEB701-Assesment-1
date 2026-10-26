@@ -7,38 +7,21 @@
 
 <div class="events-page">
 
-    <section class="content-panel events-introduction">
-        <h1>Pixel Pals Events</h1>
+    <section class="events-section">
 
-        <p>
-            Explore upcoming gaming tournaments, esports
-            competitions, and community events organised
-            by Pixel Pals.
-        </p>
-    </section>
+        <h1>Events</h1>
 
-    <section class="content-panel upcoming-events">
-
-        <h2>Upcoming Events</h2>
-
-        <div class="events-list">
+        <div class="events-grid">
 
             @forelse ($events as $event)
 
                 <article class="event-card">
 
-                    <h3>{{ $event->name }}</h3>
-
-                    <p>{{ $event->description }}</p>
-
-                    <p>
-                        <strong>Game:</strong>
-                        {{ $event->game }}
-                    </p>
+                    <h2>{{ $event->name }}</h2>
 
                     <p>
                         <strong>Date:</strong>
-                        {{ $event->event_date->format('d M Y') }}
+                        {{ $event->event_date->format('l, d M Y') }}
                     </p>
 
                     <p>
@@ -47,14 +30,25 @@
                     </p>
 
                     <p>
-                        <strong>Location:</strong>
+                        <strong>Venue:</strong>
                         {{ $event->location }}
                     </p>
 
                     <p>
-                        <strong>Maximum Teams:</strong>
-                        {{ $event->max_teams }}
+                        <strong>Game:</strong>
+                        {{ $event->game }}
                     </p>
+
+                    <p>
+                        <strong>Teams:</strong>
+                        Capacity: {{ $event->max_teams }}
+                    </p>
+
+                    <div class="event-actions">
+                        <span class="event-action-placeholder">
+                            Sign Up
+                        </span>
+                    </div>
 
                 </article>
 
@@ -69,7 +63,6 @@
         </div>
 
     </section>
-
 </div>
 
 @endsection
