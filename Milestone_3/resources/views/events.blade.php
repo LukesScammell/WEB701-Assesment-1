@@ -39,16 +39,28 @@
                         {{ $event->game }}
                     </p>
 
+                    
                     <p>
                         <strong>Teams:</strong>
-                        Capacity: {{ $event->max_teams }}
+                        {{ max(0, $event->max_teams - $event->registrations_count) }}
+                        / {{ $event->max_teams }} spaces available
                     </p>
 
+
+                    
                     <div class="event-actions">
-                        <span class="event-action-placeholder">
-                            Sign Up
-                        </span>
+                        @if ($event->registrations_count < $event->max_teams)
+                            <a href="{{ route('registrations.create', $event) }}"
+                            class="event-signup-button">
+                                Sign Up
+                            </a>
+                        @else
+                            <span class="event-full-label">
+                                Event Full
+                            </span>
+                        @endif
                     </div>
+
 
                 </article>
 
