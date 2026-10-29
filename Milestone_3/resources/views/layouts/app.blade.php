@@ -29,9 +29,29 @@
             </div>
 
             <div class="nav-account">
-                <a href="{{ url('/login') }}" class="login-button">
-                    Login
-                </a>
+                @guest
+                    <a href="{{ route('register') }}" class="login-button">
+                        Register
+                    </a>
+
+                    <a href="{{ route('login') }}" class="login-button">
+                        Login
+                    </a>
+                @endguest
+
+                @auth
+                    <span class="nav-username">
+                        {{ Auth::user()->name }}
+                    </span>
+
+                    <form method="POST" action="{{ route('logout') }}">
+                        @csrf
+
+                        <button type="submit" class="login-button">
+                            Logout
+                        </button>
+                    </form>
+                @endauth
             </div>
 
         </nav>
