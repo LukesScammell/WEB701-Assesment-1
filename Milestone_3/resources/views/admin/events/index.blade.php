@@ -9,6 +9,17 @@
     <section class="events-section">
 
         <h1>Manage Events</h1>
+        @if (session('success'))
+            <div class="alert-success" role="status">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        @if (session('error'))
+            <div class="alert-error" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
 
         <div class="events-grid">
 
@@ -45,13 +56,19 @@
                     </p>
 
                     <div class="event-actions">
-                        <span class="event-action-placeholder">
+                        <a href="{{ route('admin.events.edit', $event) }}" class="event-signup-button">
                             Edit
-                        </span>
+                        </a>
+                        <form method="POST" action="{{ route('admin.events.destroy', $event) }}"
+                            onsubmit="return confirm('Are you sure you want to delete this event?');">
+                            @csrf
+                            @method('DELETE')
 
-                        <span class="event-action-placeholder">
-                            Delete
-                        </span>
+                            <button type="submit" class="event-signup-button">
+                                Delete
+                            </button>
+                        </form>
+
                     </div>
 
                 </article>

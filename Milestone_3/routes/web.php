@@ -5,6 +5,7 @@ use App\Models\Event;
 use App\Http\Controllers\RegistrationController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\AuthenticatedSessionController;
+use App\Http\Controllers\EventController;
 
 // Display the Pixel Pals homepage
 Route::get('/', function () {
@@ -57,3 +58,36 @@ Route::middleware('guest')->group(function () {
 Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])
     ->middleware('auth')
     ->name('logout');
+
+
+
+// Only authenticated administrators can manage events
+Route::middleware(['auth', 'can:manage-events'])->group(function () {
+
+    // Display all events for administrators
+    Route::get('/admin/events', [EventController::class, 'index'])
+        ->name('admin.events.index');
+
+    // Display the create event form
+    Route::get('/admin/events/create', [EventController::class, 'create'])
+        ->name('admin.events.create');
+
+    // Save a new event to SQLite
+    Route::post('/admin/events', [EventController::class, 'store'])
+        ->name('admin.events.store');
+
+    // Display the edit form for a selected event
+    Route::get('/admin/events/{event}/edit', [EventController::class, 'edit'])
+        ->name('admin.events.edit');
+
+    // Update the selected event in SQLite
+    Route::put('/admin/events/{event}', [EventController::class, 'update'])
+        ->name('admin.events.update');
+
+    // Delete an event from SQLite
+    Route::delete('/admin/events/{event}', [EventController::class, 'destroy'])
+        ->name('admin.events.destroy');
+
+});
+
+
