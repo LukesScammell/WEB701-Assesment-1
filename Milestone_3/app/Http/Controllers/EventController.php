@@ -6,6 +6,7 @@ use App\Models\Event;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\View\View;
+use Illuminate\Validation\Rule;
 
 class EventController extends Controller
 {
@@ -39,8 +40,9 @@ class EventController extends Controller
             'location' => ['required', 'string', 'max:255'],
             'game' => ['required', 'string', 'max:255'],
             'max_teams' => ['required', 'integer', 'min:1'],
+            'team_size' => ['required', 'integer', 'min:1', 'max:100']
         ]);
-
+        
         Event::create($validated);
 
         return redirect()
@@ -72,7 +74,18 @@ class EventController extends Controller
                 'min:1',
                 'gte:' . $event->registrations()->count()
             ],
+            'team_size' => [
+                Rule::requiredIf(! $event->registrations()->exists()),
+                'integer',
+                'min:1',
+                'max:100',
+            ],
         ]);
+
+        // Prevent changing team size if teams are already registered
+        if ($event->registrations()->exists()) {
+            unset($validated['team_size']);
+        }
 
         $event->update($validated);
 

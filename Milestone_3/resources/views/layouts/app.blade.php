@@ -20,12 +20,25 @@
             </a>
 
             <div class="nav-links">
+                <a href="{{ url('/') }}">Home</a>
                 <a href="{{ url('/events') }}">Events</a>
                 <a href="{{ url('/donations') }}">Donations</a>
                 <a href="{{ url('/about') }}">About Us</a>
                 <a href="{{ url('/achievements') }}">Achievements</a>
                 <a href="{{ url('/sponsors') }}">Sponsors & Partners</a>
                 <a href="{{ url('/contact') }}">Contact</a>
+
+                @auth
+                    <a href="{{ route('registrations.index') }}">
+                        My Teams
+                    </a>
+                @endauth
+
+                @can('manage-events')
+                    <a href="{{ route('admin.events.index') }}">
+                        Manage Events
+                    </a>
+                @endcan
             </div>
 
             <div class="nav-account">
@@ -33,7 +46,6 @@
                     <a href="{{ route('register') }}" class="login-button">
                         Register
                     </a>
-
                     <a href="{{ route('login') }}" class="login-button">
                         Login
                     </a>
@@ -42,11 +54,14 @@
                 @auth
                     <span class="nav-username">
                         {{ Auth::user()->name }}
+
+                        @if (Auth::user()->is_admin)
+                            <strong class="admin-label">Admin</strong>
+                        @endif
                     </span>
 
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
-
                         <button type="submit" class="login-button">
                             Logout
                         </button>

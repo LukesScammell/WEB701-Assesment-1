@@ -1,1 +1,95 @@
-*.sqlite*
+# ========================================
+# Laravel Environment
+# ========================================
+
+.env
+.env.*
+!.env.example
+
+# ========================================
+# PHP / Composer Dependencies
+# ========================================
+
+/vendor/
+
+# ========================================
+# Node.js / NPM Dependencies
+# ========================================
+
+/node_modules/
+/npm-debug.log*
+/yarn-error.log*
+
+# ========================================
+# Laravel Cache and Temporary Files
+# ========================================
+
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+/storage/app/private/*
+!/storage/app/private/.gitignore
+
+/storage/framework/cache/*
+!/storage/framework/cache/.gitignore
+
+/storage/framework/sessions/*
+!/storage/framework/sessions/.gitignore
+
+/storage/framework/testing/*
+!/storage/framework/testing/.gitignore
+
+/storage/framework/views/*
+!/storage/framework/views/.gitignore
+
+/storage/logs/*
+!/storage/logs/.gitignore
+
+# ========================================
+# SQLite Database
+# ========================================
+
+/database/*.sqlite
+/database/*.sqlite-*
+/database/*.sqlite3
+
+# ========================================
+# Frontend Build Files
+# ========================================
+
+/public/build/
+/public/hot
+
+# ========================================
+# Testing
+# ========================================
+
+/.phpunit.cache/
+/coverage/
+
+# ========================================
+# IDE / Editor Files
+# ========================================
+
+/.idea/
+/.vscode/
+/.vscode-test/
+/.vscode-oss/
+
+# ========================================
+# Operating System Files
+# ========================================
+
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ========================================
+# Other Temporary Files
+# ========================================
+
+*.log
+*.tmp
+*.bak
+*.swp
+*~

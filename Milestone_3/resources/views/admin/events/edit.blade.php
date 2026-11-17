@@ -66,14 +66,26 @@
                     min="{{ max(1, $event->registrations()->count()) }}" required>
             </div>
 
-            <div class="event-actions">
-                <button type="submit" class="registration-submit">
-                    Save Changes
-                </button>
+            <div class="registration-field">
+                <label for="team_size">Players Per Team</label>
+                <input type="number" id="team_size" name="team_size"
+                    value="{{ old('team_size', $event->team_size) }}"
+                    min="1" max="100"
+                    @disabled($event->registrations()->exists())
+                    required>
+                @if ($event->registrations()->exists())
+                    <p>Team size cannot be changed after teams have registered.</p>
+                @endif
+            </div>
 
-                <a href="{{ route('admin.events.index') }}" class="event-signup-button">
+            <div class="registration-actions">
+                <a href="{{ route('admin.events.index') }}"
+                class="registration-back-button">
                     Cancel
                 </a>
+                <button type="submit" class="registration-submit-button">
+                    Save Changes
+                </button>
             </div>
         </form>
     </section>

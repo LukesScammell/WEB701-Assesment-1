@@ -13,18 +13,10 @@
         <h2>{{ $event->name }}</h2>
 
         <div class="registration-event-details">
-            <p>
-                <strong>Game:</strong> {{ $event->game }}
-            </p>
-
-            <p>
-                <strong>Date:</strong>
-                {{ $event->event_date->format('d M Y') }}
-            </p>
-
-            <p>
-                <strong>Location:</strong> {{ $event->location }}
-            </p>
+            <p><strong>Game:</strong> {{ $event->game }}</p>
+            <p><strong>Date:</strong> {{ $event->event_date->format('d M Y') }}</p>
+            <p><strong>Location:</strong> {{ $event->location }}</p>
+            <p><strong>Players Per Team:</strong> {{ $event->team_size }}</p>
         </div>
 
         @if (session('success'))
@@ -45,57 +37,48 @@
             </div>
         @endif
 
-        <form
-            method="POST"
-            action="{{ route('registrations.store', $event) }}"
-            class="registration-form"
-        >
+        <form method="POST" action="{{ route('registrations.store', $event) }}" class="registration-form">
             @csrf
 
             <div class="registration-field">
                 <label for="team_name">Team Name</label>
-
-                <input
-                    type="text"
-                    id="team_name"
-                    name="team_name"
-                    value="{{ old('team_name') }}"
-                    maxlength="255"
-                    required
-                >
+                <input type="text" id="team_name" name="team_name"
+                    value="{{ old('team_name') }}" maxlength="255" required>
             </div>
 
             <div class="registration-field">
                 <label for="contact_name">Contact Name</label>
-
-                <input
-                    type="text"
-                    id="contact_name"
-                    name="contact_name"
-                    value="{{ old('contact_name') }}"
-                    maxlength="255"
-                    required
-                >
+                <input type="text" id="contact_name" name="contact_name"
+                    value="{{ old('contact_name', auth()->user()->name) }}" maxlength="255" required>
             </div>
 
             <div class="registration-field">
                 <label for="contact_email">Contact Email</label>
-
-                <input
-                    type="email"
-                    id="contact_email"
-                    name="contact_email"
-                    value="{{ old('contact_email') }}"
-                    maxlength="255"
-                    required
-                >
+                <input type="email" id="contact_email" name="contact_email"
+                    value="{{ old('contact_email', auth()->user()->email) }}" maxlength="255" required>
             </div>
 
+            <h3>Team Players</h3>
+
+            <p>Enter the gaming username of each player participating in this tournament.</p>
+
+            @for ($i = 0; $i < $event->team_size; $i++)
+                <div class="registration-field">
+                    <label for="player_{{ $i }}">
+                        Player {{ $i + 1 }} Username
+                    </label>
+
+                    <input type="text"
+                        id="player_{{ $i }}"
+                        name="players[]"
+                        value="{{ old('players.' . $i) }}"
+                        maxlength="100"
+                        required>
+                </div>
+            @endfor
+
             <div class="registration-actions">
-                <a
-                    href="{{ url('/events') }}"
-                    class="registration-back-button"
-                >
+                <a href="{{ url('/events') }}" class="registration-back-button">
                     Back to Events
                 </a>
 

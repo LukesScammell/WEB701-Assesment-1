@@ -21,7 +21,7 @@
 
         <form method="POST" action="{{ route('admin.events.store') }}" class="registration-form">
             @csrf
-
+            
             <div class="registration-field">
                 <label for="name">Event Name</label>
                 <input type="text" id="name" name="name"
@@ -63,6 +63,12 @@
                 <label for="max_teams">Maximum Teams</label>
                 <input type="number" id="max_teams" name="max_teams"
                     value="{{ old('max_teams') }}" min="1" required>
+            </div>
+
+            <div class="registration-field">
+                <label for="team_size">Players Per Team</label>
+                <input type="number" id="team_size" name="team_size"
+                    value="{{ old('team_size') }}" min="1" max="100" required>
             </div>
 
             <div class="event-actions">
