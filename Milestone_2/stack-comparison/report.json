@@ -1,16 +1,62 @@
 [
   {
     "stack": {
+      "id": "laravel",
+      "name": "PHP 8 / Laravel + Livewire"
+    },
+    "total": 8.8,
+    "breakdown": {
+      "performance": 1.6,
+      "developer": 1.8,
+      "ecosystem": 1.3499999999999999,
+      "cost": 1.3499999999999999,
+      "security": 1.3499999999999999,
+      "talent": 1.3499999999999999
+    }
+  },
+  {
+    "stack": {
+      "id": "blazor",
+      "name": ".NET 8 / Blazor"
+    },
+    "total": 7.9,
+    "breakdown": {
+      "performance": 1.6,
+      "developer": 1.2000000000000002,
+      "ecosystem": 1.3499999999999999,
+      "cost": 1.2,
+      "security": 1.3499999999999999,
+      "talent": 1.2
+    }
+  },
+  {
+    "stack": {
+      "id": "wordpress",
+      "name": "WordPress Full Stack"
+    },
+    "total": 7.75,
+    "breakdown": {
+      "performance": 1.4000000000000001,
+      "developer": 0.8,
+      "ecosystem": 1.5,
+      "cost": 1.3499999999999999,
+      "security": 1.2,
+      "talent": 1.5
+    }
+  },
+  {
+    "stack": {
       "id": "fastapi",
       "name": "Python / FastAPI"
     },
-    "total": 8.5,
+    "total": 7.7,
     "breakdown": {
-      "development": 1.75,
-      "requirements": 2.25,
-      "security": 1.8,
-      "database": 1.3499999999999999,
-      "frontend": 1.3499999999999999
+      "performance": 1.6,
+      "developer": 1,
+      "ecosystem": 1.2,
+      "cost": 1.3499999999999999,
+      "security": 1.3499999999999999,
+      "talent": 1.2
     }
   },
   {
@@ -18,13 +64,14 @@
       "id": "gradio",
       "name": "Gradio App Stack"
     },
-    "total": 7.55,
+    "total": 7.15,
     "breakdown": {
-      "development": 2.25,
-      "requirements": 1.75,
-      "security": 1.6,
-      "database": 1.2,
-      "frontend": 0.75
+      "performance": 1.2000000000000002,
+      "developer": 1.6,
+      "ecosystem": 0.8999999999999999,
+      "cost": 1.3499999999999999,
+      "security": 1.2,
+      "talent": 0.8999999999999999
     }
   }
 ]

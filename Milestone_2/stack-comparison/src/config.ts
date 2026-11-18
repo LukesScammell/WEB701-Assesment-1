@@ -4,28 +4,33 @@ import { Criterion, StackCandidate, ScoreMatrix } from "./types";
 // The weights total 1.00.
 export const criteria: Criterion[] = [
     {
-        id: "development",
-        label: "Development Complexity",
-        weight: 0.25
-    },
-    {
-        id: "requirements",
-        label: "Pixel Pals Requirements",
-        weight: 0.25
-    },
-    {
-        id: "security",
-        label: "Authentication and Security",
+        id: "performance",
+        label: "Performance & Scalability",
         weight: 0.20
     },
     {
-        id: "database",
-        label: "Database Integration",
+        id: "developer",
+        label: "Developer Experience",
+        weight: 0.20
+    },
+    {
+        id: "ecosystem",
+        label: "Ecosystem Maturity",
         weight: 0.15
     },
     {
-        id: "frontend",
-        label: "Frontend Flexibility",
+        id: "cost",
+        label: "Cost",
+        weight: 0.15
+    },
+    {
+        id: "security",
+        label: "Security Posture",
+        weight: 0.15
+    },
+    {
+        id: "talent",
+        label: "Talent Availability",
         weight: 0.15
     }
 ];
@@ -59,18 +64,47 @@ export const stacks: StackCandidate[] = [
 // and tested. Each criterion uses a score from 1 to 10.
 export const scores: ScoreMatrix = {
     fastapi: {
-        development: 7,
-        requirements: 9,
+        performance: 8,
+        developer: 5,
+        ecosystem: 8,
+        cost: 9,
         security: 9,
-        database: 9,
-        frontend: 9
+        talent: 8
     },
 
     gradio: {
-        development: 9,
-        requirements: 7,
+        performance: 6,
+        developer: 8,
+        ecosystem: 6,
+        cost: 9,
         security: 8,
-        database: 8,
-        frontend: 5
+        talent: 6
+    },
+
+    blazor: {
+        performance: 8,
+        developer: 6,
+        ecosystem: 9,
+        cost: 8,
+        security: 9,
+        talent: 8
+    },
+
+    laravel: {
+        performance: 8,
+        developer: 9,
+        ecosystem: 9,
+        cost: 9,
+        security: 9,
+        talent: 9
+    },
+
+    wordpress: {
+        performance: 7,
+        developer: 4,
+        ecosystem: 10,
+        cost: 9,
+        security: 8,
+        talent: 10
     }
 };
